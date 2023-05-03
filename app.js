@@ -5,6 +5,10 @@ const fs = require("fs");
 const path = require("path");
 require("dotenv").config();
 const multer = require("multer");
+const cloudinary = require("./cloudinary");
+const upload = require("./multer");
+const { url } = require("inspector");
+const userRouter = require("./routes/user");
 
 const app = express();
 
@@ -12,6 +16,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use("/user", userRouter);
 
 // connect to database
 mongoose
@@ -33,7 +38,7 @@ var storage = multer.diskStorage({
   },
 });
 
-var upload = multer({ storage: storage });
+//const upload = multer({ storage: storage });
 
 // GET image from the database
 app.get("/", async (req, res) => {
@@ -75,6 +80,32 @@ app.post("/", upload.single("image"), async (req, res, next) => {
     console.error(err.message);
   }
 });
+
+app.post(
+  "/upload-images",
+  upload.array("submitted_file", async (req, res) => {
+    try {
+      const uploader = async (path) => {
+        return await cloudinary.uploads(path, "Files");
+      };
+
+      const urls = [];
+      const files = req.files;
+
+      for (let file of files) {
+        let { path } = file;
+        let newPath = await uploader(path);
+
+        urls.push(newPath);
+        fs.unlinkSync(path);
+      }
+
+      res.status(201).json({ data: urls });
+    } catch (err) {
+      console.error(err.message);
+    }
+  })
+);
 
 const PORT = process.env.PORT || 3000;
 
