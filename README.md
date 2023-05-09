@@ -13,7 +13,7 @@ The Overview of the app
    `Endpoints: "/user"`
 
 2. Get uploaded file for a user
-   `Method: GET - "/user/imageId"`
+   `Method: GET - "/user/userId"`
 
 3. Update uploaded file
    `Method: PUT - "/user/imageId"`
