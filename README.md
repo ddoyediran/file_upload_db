@@ -1,6 +1,6 @@
 ## File Upload API App
 
-A backend REST API microservices that can be used to accept files (media, pdf, docs, .zpi) submission from user as an input.
+A backend REST API microservices that can be used to accept files (media, pdf, docs, .zip) submission from user as an input.
 
 The Overview of the app
 
