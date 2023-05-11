@@ -27,4 +27,4 @@ The Overview of the app
 
 `Multer:` Multer is a nodejs npm package and it is used as a middleware to handle multipart/ form-data that is to handle uploading of files.
 
-`Other packages:` Express.js, Dotenv, Mongoose
+`Other packages:` Express.js, Dotenv, Mongoose, MongoDB (Database)
